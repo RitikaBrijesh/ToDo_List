@@ -1,0 +1,41 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>To do List</h2>
+
+            <form method="POST" action="/" class='fields'>
+                {% csrf_token %}
+                {{form.title}}
+
+                <button type="submit" class="btn"> Submit</button>
+            </form>
+        <ul class="list-group">    
+            {% for task in tasks %}
+                <li class="list-group-item list-group-item-action">
+                    {% if task.complete == True %}
+                        <strike>{{task}}</strike> 
+                    {% else %}
+                  
+                    {{task}} 
+                
+                    {% endif %}
+                   
+                    <div class="float-right">
+                        <span class="update"><a href="{% url 'Update' task.id %}" class="btn btn-sm btn-info">Update</a> </span>
+                        <span class="delete"> <a href="{% url 'Delete' task.id %}" id="tag" class="btn btn-sm btn-danger">Delete</a> </span>
+                    </div>
+                </li>
+            {% endfor %}
+        
+        </ul>
+        
+        </div>
+    </body>
+</html>
